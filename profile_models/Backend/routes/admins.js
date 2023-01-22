@@ -6,15 +6,13 @@ let Admin = require('../models/adminModels')
 
 
 // view admin 
-router.route('/').get((res,req)=>{
+router.route('/').get((req,res)=>{
     Admin.find()
     .then(admins => res.status(200).json(admins))
     .catch(err => res.status(400).json('Error: ' + err))
 })
 
 
-// instering the employee inside collection 
-//http://localhost:3000/api/emp/employees
 router.route('/add').post((req,res)=>{
  const adm = req.body
   const newAdmin= new  Admin({
