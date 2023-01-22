@@ -8,18 +8,20 @@ let Admin = require('../models/adminModels')
 // view admin 
 router.route('/').get((res,req)=>{
     Admin.find()
-    .then(admins => res.status(200).json(admins)
-    .catch(err => res.status(400).json('Error: ' + err)))
+    .then(admins => res.status(200).json(admins))
+    .catch(err => res.status(400).json('Error: ' + err))
 })
 
 
 // instering the employee inside collection 
 //http://localhost:3000/api/emp/employees
 router.route('/add').post((req,res)=>{
+ const adm = req.body
+  const newAdmin= new  Admin({
+    user : adm
+  })
 
-  const newAdmin= new Admin(req.body)
-
-  newAdmin.save()
+newAdmin.save()
   .then(() => res.json('admin added!'))
   .catch(error => 
    { const errors = handleErrors(error);
