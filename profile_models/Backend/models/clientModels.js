@@ -1,34 +1,34 @@
 const mongoose = require("mongoose")
-
+const User = require('../models/userModels')
 
 const ClientSchema = new mongoose.Schema({
     
-    
-    first_name:{
-        type:String,
-        required : [true, "Please enter a First name."],
+    user : User
+    // first_name:{
+    //     type:String,
+    //     required : [true, "Please enter a First name."],
 
-    },
-    last_name:{
-        type:String,
-        required : [true, "Please enter a Last name."],
+    // },
+    // last_name:{
+    //     type:String,
+    //     required : [true, "Please enter a Last name."],
 
-    },
-    email:{
-        type:String,
-        required : [true, "Please enter an Email."],
-        unique: true,
-        validate:[isEmail, "Please Enter a valid Email."]
+    // },
+    // email:{
+    //     type:String,
+    //     required : [true, "Please enter an Email."],
+    //     unique: true,
+    //     validate:[isEmail, "Please Enter a valid Email."]
 
 
-    },
-    gender:{
-        type:String,
-         enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
-         required : [true, "Please enter a Gender."],
+    // },
+    // gender:{
+    //     type:String,
+    //      enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
+    //      required : [true, "Please enter a Gender."],
 
-    },
-    pages: [{
+    // },
+ ,   pages: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Page',
         required: true
