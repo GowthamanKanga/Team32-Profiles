@@ -4,7 +4,7 @@ const User = require('../models/userModels')
 
 const AdminSchema = new mongoose.Schema({
 
-    user : User
+    user : User.getSchema
     
     // first_name:{
     //     type:String,

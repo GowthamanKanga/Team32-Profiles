@@ -18,14 +18,15 @@ const UserSchema = new mongoose.Schema({
         type:String,
          enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
          required : [true, "Please enter a Gender."],
-
-    // email: {
-    //     type:String,
-    //     required : [true, "Please enter an Email."],
-    //     unique: true,
-    //     validate:[isEmail, "Please Enter a valid Email."],
-    //     // match: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ 
-    // },
+    }
+     , email:{
+            type:String,
+            required : [true, "Please enter an Email."],
+            unique: true,
+            validate:[isEmail, "Please Enter a valid Email."]
+    
+    
+        },
     
     password: {
         type: String,
@@ -36,7 +37,7 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     }
-}}, {
+}, {
     timestamps: true
 })
 
@@ -69,7 +70,8 @@ const UserSchema = new mongoose.Schema({
 //     this.isLoggedIn = false
 //     return this.save()
 // }
-// const User = mongoose.model('User', UserSchema);
+ const User = mongoose.model('User', UserSchema);
 
-module.exports =  UserSchema;
+exports.getModel = User
+exports.getSchema = UserSchema
 

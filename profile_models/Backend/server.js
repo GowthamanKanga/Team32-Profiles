@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const adminsRouter = require('./routes/admins')
 // const clientsRouter = require('./routes/clients')
-// const usersRouter = require('./routes/users')
+const usersRouter = require('./routes/users')
 
 
  
@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/admin",adminsRouter)
 // app.use("/client",clientsRouter)
-// app.use("/user",usersRouter)
+app.use("/user",usersRouter)
 
 const uri = process.env.ATLAS_URI;
 mongoose.set('strictQuery', false);

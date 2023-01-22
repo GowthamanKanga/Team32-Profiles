@@ -3,7 +3,7 @@ const User = require('../models/userModels')
 
 const ClientSchema = new mongoose.Schema({
     
-    user : User
+    user : User.getSchema
     // first_name:{
     //     type:String,
     //     required : [true, "Please enter a First name."],
