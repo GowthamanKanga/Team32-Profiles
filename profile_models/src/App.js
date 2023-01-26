@@ -1,25 +1,52 @@
-import logo from './logo.svg';
+
 import './App.css';
 
+import {
+
+  Routes,
+  Route,
+  BrowserRouter
+} from "react-router-dom";
+
+
+import Signup from './Signup';
+import { Login  } from './Login';
+
+
 function App() {
+
+// const logout =()=>{
+//   localStorage.removeItem("token");
+//   window.location.replace('/')
+// }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+ 
+
+<div class="navbar">
+ 
+  
+  <a  href="/signup" class="right">Signup</a>
+  <a  href="/login" class="right">login</a>
+</div>
+   
+      <BrowserRouter>
+      <Routes>
+       
+        <Route path="/signup" element={<Signup />}> </Route>
+
+        <Route path="/login" element={<Login />}> </Route>
+
+
+      </Routes>
+    </BrowserRouter>
+  
+    </>
+    
   );
+  
 }
 
 export default App;
+
+

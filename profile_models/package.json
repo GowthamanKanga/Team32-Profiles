@@ -8,6 +8,8 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -37,7 +39,9 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "tailwindcss": "^3.2.4"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"

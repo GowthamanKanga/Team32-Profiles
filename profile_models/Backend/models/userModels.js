@@ -17,9 +17,9 @@ const UserSchema = new mongoose.Schema({
     gender:{
         type:String,
          enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
-         required : [true, "Please enter a Gender."],
+        // required : [true, "Please enter a Gender."],
     }
-     , email:{
+    , email:{
             type:String,
             required : [true, "Please enter an Email."],
             unique: true,
@@ -41,25 +41,25 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
 })
 
-// // Hash the plain text password before saving the user
-// UserSchema.pre("save", function (next) {
-//     if (!this.isModified("password")) {
-//         return next()
-//     }
+// Hash the plain text password before saving the user
+UserSchema.pre("save", function (next) {
+    if (!this.isModified("password")) {
+        return next()
+    }
 
-//     bcrypt.hash(this.password, 8, (err, hash) => {
-//         if (err) {
-//             return next(err)
-//         }
-//         this.password = hash
-//         next()
-//     })
-// })
+    bcrypt.hash(this.password, 8, (err, hash) => {
+        if (err) {
+            return next(err)
+        }
+        this.password = hash
+        next()
+    })
+})
 
-// // Compare the plain text password with the hashed password
-// UserSchema.methods.checkPassword = function (password) {
-//     return bcrypt.compare(password, this.password)
-// }
+// Compare the plain text password with the hashed password
+UserSchema.methods.checkPassword = function (password) {
+    return bcrypt.compare(password, this.password)
+}
 
 // UserSchema.methods.login = function() {
 //     this.isLoggedIn = true

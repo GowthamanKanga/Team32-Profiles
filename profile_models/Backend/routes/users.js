@@ -2,6 +2,8 @@
 const router = require('express').Router()
 // importing model
 let User = require('../models/userModels')
+const jwt = require("jsonwebtoken")
+
 
 User = User.getModel
 
@@ -68,7 +70,72 @@ router.route("/update/:id").put((req,res)=>{
 
 
 
+//-------------------------------------------------------------------//
 
+// Login and Register User 
+
+
+
+router.post("/signup", async(req,res)=>{
+  const user = req.body
+  const userExists = await User.findOne( {username: user.email})
+  if (userExists) {
+    res.status(400).json("User already Exists")
+    // throw new Error('User already exists')
+  }
+  else{
+
+  const newUser = new User(req.body)
+  try{
+      await newUser.save()
+      res.status(201).send(newUser)
+  }catch(error){
+      
+      const errors = handleErrors(error);
+      res.status(500).json({errors})
+  } 
+}
+})
+
+
+
+router.post("/login", async(req,res)=>{
+   try {
+          // adding user info email and password in user variable 
+          const user = req.body
+          // checking if user exists
+
+          const userExists = await User.findOne( {email: user.username})
+          // if user is there we validate password and if its right we sent 200 logged in 
+          if(userExists){
+            const isValid = await userExists.checkPassword(user.password)
+
+                  if(isValid){
+                            jwt.sign({userExists},process.env.JWT_SECRET,{
+                                           expiresIn: "1h",},
+                                            (err,token)=>{
+                                              res.status(200).send({status : true, username: user.username ,message: "User logged in successfully", accessToken : token})
+                                            }) }
+                  else {
+                    return  res.status(401).send({ status : false, message: "Invalid  password"})
+
+                  }
+          }
+          // or sending error 
+          else{
+            return  res.status(401).send({ status : false, message: "Invalid Username and password"})
+          }
+           
+        }
+      catch(error){
+        
+        const errors = handleErrors(error);
+        res.status(500).json({errors})
+    }
+   
+    
+
+})
 
 /// all methods needed for User
 const handleErrors = (err) => {
