@@ -33,6 +33,32 @@ const UserSchema = new mongoose.Schema({
         minlength: 8,
         maxlength: 32,
     },
+    address:{
+        type:String,
+     
+
+    },
+    city:{
+        type:String,
+       
+
+    },
+    country:{
+        type:String,
+     
+
+    },
+    province:{
+        type:String,
+       
+
+    },
+    zip_code:{
+        type:String,
+       
+
+    },
+   
     isLoggedIn: {
         type: Boolean,
         default: false

@@ -11,6 +11,7 @@ import {
 
 import Signup from './Signup';
 import { Login  } from './Login';
+import SettingPage from './SettingPage';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
   
   <a  href="/signup" class="right">Signup</a>
   <a  href="/login" class="right">login</a>
+  <a href ="/settingPage" class ="right">SettingPage</a>
 </div>
    
       <BrowserRouter>
@@ -36,6 +38,7 @@ function App() {
         <Route path="/signup" element={<Signup />}> </Route>
 
         <Route path="/login" element={<Login />}> </Route>
+        <Route path ='/settingPage' element = {<SettingPage/>} ></Route>
 
 
       </Routes>
