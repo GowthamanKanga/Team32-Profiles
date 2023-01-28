@@ -49,6 +49,10 @@ export class Login extends Component {
         const data = await res.json();
         this.setState({ success: data.message });
         localStorage.setItem("token", "Bearer " + data.accessToken);
+        localStorage.setItem("userId",  this.state.username);
+        setTimeout(() => {
+          window.location.replace('/settingPage')
+        }, 1500);
       } else {
         localStorage.removeItem("token");
         const error = await res.json();

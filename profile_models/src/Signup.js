@@ -72,9 +72,10 @@ export  default class Signup extends Component {
             }
           })
           .then((resp) => {
-            if (resp && resp.errors) {
-              this.setState({ errorRes: resp.errors });
-            }
+            console.log(resp)
+            
+              this.setState({ ERROR_STATE: resp.errors });
+            
           })
           .catch((err) => {
             console.error(err.message);

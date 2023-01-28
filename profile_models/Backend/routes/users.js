@@ -3,6 +3,7 @@ const router = require('express').Router()
 // importing model
 let User = require('../models/userModels')
 const jwt = require("jsonwebtoken")
+const {verifytoken} = require("./func")
 
 
 User = User.getModel
@@ -27,15 +28,29 @@ newUser.save()
 });
    
 
-router.route('/:id').get( (req,res)=>{
-
-const id = req.params.id
+router.get('/:id', verifytoken, (req,res)=>{
+  try {
+    const email = req.params.id;
+    
  
-User.findById(id)
-.then(User=> res.status(200).send(User))
-.catch(() =>{  res.status(500).send({message: "Can not find User with given id."})})
+    User.findOne({email:email})
+    .then(User=> {
+       if(User){
+        res.status(200).send(User)
+       }
+       else{  res.status(500).send({message: "Can not find User with given id."})}
+    })
+  } catch(err) {
+    console.error(err);
+    res.status(500).send({ message: err.message });
+  }
+});
 
-})
+
+
+
+
+
 
 // delete User
 
@@ -51,21 +66,27 @@ router.route('/:id').delete( (req,res)=>{
 // update User with id
 
 router.route("/update/:id").put((req,res)=>{
+  const email = req.params.id
+  const newUser = req.body
 
-    const id = req.params.eid
-    const newUser = req.body
-
-    EmployeeModel.findById(id)
-    .then(User =>{
-        User = newUser
-        User.save()
-        .then(() => res.json('User updated!'))
-        .catch(error => 
-         { const errors = handleErrors(error);
-          res.status(500).json({errors})});
-      })
-     .catch((error) =>  res.status(500).send({message: "Can not find User with given id."}));
-})
+  User.findOne({email: email})
+  .then(User => {
+      if(!User){
+        res.status(500).send({message: "Can not find User with given id."});
+      }
+      
+      User.updateOne(newUser)
+  
+      .then(() => res.json('User updated!'))
+      .catch(error => {
+        const errors = handleErrors(error);
+        res.status(500).json({errors});
+      });
+  })
+  .catch((error) => {
+      res.status(500).send(error);
+  });
+});
 
 
 
