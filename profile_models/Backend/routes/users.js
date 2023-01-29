@@ -71,22 +71,22 @@ router.route("/update/:id").put((req,res)=>{
 
   User.findOne({email: email})
   .then(User => {
-      if(!User){
-        res.status(500).send({message: "Can not find User with given id."});
-      }
       
-      User.updateOne(newUser)
-  
-      .then(() => res.json('User updated!'))
-      .catch(error => {
-        const errors = handleErrors(error);
-        res.status(500).json({errors});
-      });
+      
+          User.updateOne(newUser)
+          .then(() => res.json('User updated!'))
+          .catch(error => {
+             const erro = handleErrors(error);
+            res.status(500).json({erro});
+          });
+      
   })
   .catch((error) => {
-      res.status(500).send(error);
+    res.status(500).send({message: "Can not find User with given id."});
   });
 });
+
+
 
 
 
