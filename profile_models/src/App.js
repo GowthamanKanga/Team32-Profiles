@@ -12,6 +12,7 @@ import {
 import Signup from './Signup';
 import { Login  } from './Login';
 import SettingPage from './SettingPage';
+import ViewProfile from './ViewProfile';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
   <a  href="/signup" class="right">Signup</a>
   <a  href="/login" class="right">login</a>
   <a href ="/settingPage" class ="right">SettingPage</a>
+  <a href ="/ViewProfile" class ="right">ViewProfile</a>
 </div>
    
       <BrowserRouter>
@@ -39,6 +41,7 @@ function App() {
 
         <Route path="/login" element={<Login />}> </Route>
         <Route path ='/settingPage' element = {<SettingPage/>} ></Route>
+        <Route path ='/ViewProfile' element = {<ViewProfile/>} ></Route>
 
 
       </Routes>
