@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { useCallback } from 'react';
-
+import ViewBooking, {viewBooking} from './ViewBooking';
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from "react";
 import {  useNavigate } from "react-router-dom";
@@ -25,8 +25,10 @@ export default function ViewProfile() {
   const [zip_code, setzip_code] = useState("");
   const [response,setResponse] = useState("");
   const [timeOut,setTimeOut] = useState("");
+  const [showBooking,setShowBooking] = useState("")
   
-
+const onhandleClose  = () => setShowBooking(false)
+console.log(showBooking)
   const userId =  localStorage.getItem("userId");
     
   const fetchData = async () => {
@@ -86,14 +88,15 @@ useEffect(() => {
   return (
   
 
-<>
+<div>
+
 
 <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"/>
 <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"/>
 <img  src="../pexels-pixabay-220453.jpg"/>
 
 <main className="profile-page">
-  
+
   <section className="relative block h-500-px">
    
   <section className="relative block h-500-px bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1499336315816-097655dcfbda?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=2710&amp;q=80')` }}>
@@ -169,205 +172,107 @@ useEffect(() => {
 
 
     <footer className="relative bg-blueGray-200 pt-8 pb-6 mt-8">
-  <div className="container mx-auto px-4">
-    <div className="flex flex-wrap items-center md:justify-between justify-center">
-      <div className="w-full md:w-6/12 px-4 mx-auto text-center">
-       
-      </div>
-    </div>
-  </div>
-</footer><div className="flex flex-wrap justify-center">
-          <ul class="max-w-large divide-y divide-gray-200 dark:divide-gray-700">
-   <li class="pb-3 sm:pb-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Neil Sims
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $320
-         </div>
-      </div>
-   </li>
-   <li class="py-3 sm:py-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Bonnie Green
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $3467
-         </div>
-      </div>
-   </li>
-   <li class="py-3 sm:py-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Michael Gough
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $67
-         </div>
-      </div>
-   </li>
-   <li class="py-3 sm:py-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Thomas Lean
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $2367
-         </div>
-      </div>
-   </li>
-   <li class="pt-3 pb-0 sm:pt-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-4.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Lana Byrd
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $367
-         </div>
-      </div>
-   </li>
-</ul>
-</div>
-  </section>
   
+</footer>
+
+  </section>
+  <div className="container mx-auto px-4">
+  <body>
+ 
+                <div class="bg-gradient-to-r from-gray-600 via-gray-500 to-gray-600 px-4 py-5 border-b rounded-t sm:px-6">
+                  <h3 class="text-lg leading-6 font-medium text-white">
+                   Booking List
+                  </h3>
+                </div>
+                <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                  <ul class="divide-y divide-gray-200">
+                    <li>
+                      <a class="block hover:bg-gray-50">
+                        <div class="px-4 py-4 sm:px-6">
+                          <div class="flex items-center justify-between">
+                            <p class="text-sm font-thin text-gray-700 truncate">
+                              Increase sales by 10% year over year
+                            </p>
+                           
+                            <button   onClick={()=>setShowBooking(true)} class="hover:bg-gray-200  bg-gray-100     outline-none focus:outline-none font-semibold py-2 px-4  rounded-full">
+  View Details
+</button>
+   
+                          </div>
+                          <div class="mt-2 sm:flex sm:justify-between">
+                            <div class="sm:flex">
+                              <p class="flex items-center text-sm font-light text-gray-500">
+                                <time datetime="2020-01-07">January 7, 2020</time>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                
+              <li>
+                      <a class="block hover:bg-gray-50">
+                        <div class="px-4 py-4 sm:px-6">
+                          <div class="flex items-center justify-between">
+                            <p class="text-sm font-thin text-gray-700 truncate">
+                              Increase newsletter subscribers by 500
+                            </p>
+                              
+                            <button class="hover:bg-gray-200  bg-gray-100   outline-none focus:outline-none font-semibold py-2 px-4  rounded-full">
+  View Details
+</button>
+                          </div>
+                          <div class="mt-2 sm:flex sm:justify-between">
+                            <div class="sm:flex">
+                              <p class="flex items-center text-sm font-light text-gray-500">
+                                <time datetime="2020-01-07">January 7, 2020</time>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                
+             <li>
+                      <a class="block hover:bg-gray-50">
+                        <div class="px-4 py-4 sm:px-6">
+                          <div class="flex items-center justify-between">
+                            <p class="text-sm font-thin text-gray-700 truncate">
+                              Increase customer satisfaction rating by 10 points 
+                            </p>
+                               
+                            <button class="hover:bg-gray-200  bg-gray-100  outline-none focus:outline-none font-semibold py-2 px-4  rounded-full">
+  View Details
+</button>
+                          </div>
+                          <div class="mt-2 sm:flex sm:justify-between">
+                            <div class="sm:flex">
+                              <p class="flex items-center text-sm font-light text-gray-500">
+                                <time datetime="2020-01-07">January 7, 2020</time>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+
+                </div>
+              </body>
+              </div>
+              <ViewBooking visible={showBooking} onClose ={onhandleClose}/>
+
+
+
+            
+
 </main>
-<div className="flex flex-wrap justify-center">
-          <ul class="max-w-large divide-y divide-gray-200 dark:divide-gray-700">
-   <li class="pb-3 sm:pb-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Neil Sims
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $320
-         </div>
-      </div>
-   </li>
-   <li class="py-3 sm:py-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Bonnie Green
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $3467
-         </div>
-      </div>
-   </li>
-   <li class="py-3 sm:py-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Michael Gough
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $67
-         </div>
-      </div>
-   </li>
-   <li class="py-3 sm:py-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Thomas Lean
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $2367
-         </div>
-      </div>
-   </li>
-   <li class="pt-3 pb-0 sm:pt-4">
-      <div class="flex items-center space-x-4">
-         <div class="flex-shrink-0">
-            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-4.jpg" alt="Neil image"/>
-         </div>
-         <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-               Lana Byrd
-            </p>
-            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-               email@flowbite.com
-            </p>
-         </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-            $367
-         </div>
-      </div>
-   </li>
-</ul>
+
+     
+       
 </div>
-</>
+
+
 
   )
 }
