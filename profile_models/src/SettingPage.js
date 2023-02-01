@@ -10,9 +10,6 @@ import Swal from 'sweetalert2'
 
 
 
-
-
-
 export default function SettingPage() {
 
 
@@ -36,7 +33,7 @@ export default function SettingPage() {
     
   const fetchData = async () => {
     try {
-        const res = await fetch(`http://localhost:5000/user/${userId}`, {
+        const res = await fetch(`http://localhost:3000/user/${userId}`, {
             headers: {
                 "Authorization": localStorage.getItem("token"),
             },
@@ -46,10 +43,7 @@ export default function SettingPage() {
        if(res.status != 200){
         
 //setTimeOut("true");
-
-          
-
-           
+  
             {  setTimeout(() => {
               Swal.fire({
                 title: "Time out ",
@@ -98,7 +92,7 @@ const handleSubmit = async (e) => {
   const userData = {first_name, last_name, gender, email, city, country, province,address,zip_code}
 
   try {
-    const res = await fetch(`http://localhost:5000/user/update/${userId}`, {
+    const res = await fetch(`http://localhost:3000/user/update/${userId}`, {
       method: "PUT",
       headers: { "content-type": "application/json",
        "Authorization": localStorage.getItem("token") },

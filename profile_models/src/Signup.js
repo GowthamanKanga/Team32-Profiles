@@ -54,7 +54,7 @@ export  default class Signup extends Component {
     onSubmitSignup = (event) => {
         event.preventDefault();
       
-        fetch("http://localhost:5000/user/signup", {
+        fetch("http://localhost:3000/user/signup", {
           method: "POST",
           headers: {
             "content-type": "application/json",

@@ -36,7 +36,7 @@ export class Login extends Component {
     event.preventDefault();
   
     try {
-      const res = await fetch("http://localhost:5000/user/login", {
+      const res = await fetch("http://localhost:3000/user/login", {
         method: "POST",
         headers: {
           "content-type": "application/json"

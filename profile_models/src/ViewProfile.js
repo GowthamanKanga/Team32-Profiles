@@ -1,6 +1,88 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { useCallback } from 'react';
+
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import {  useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
+
+
 import backgroundImage from './pexels-pixabay-220453.jpg'
 export default function ViewProfile() {
+  const navigate=useNavigate();
+
+  // reacct state
+  const [first_name, setfirst_name] = useState("");
+  const [last_name, setlast_name] = useState("");
+  const [email, setUserEmail] = useState("");
+  const [gender, setgender] = useState("");
+  
+  
+  const [address, setaddress] = useState("");
+  const [city, setcity] = useState("");
+  const [country, setcountry] = useState("");
+  const [province, setprovince] = useState("");
+  const [zip_code, setzip_code] = useState("");
+  const [response,setResponse] = useState("");
+  const [timeOut,setTimeOut] = useState("");
+  
+
+  const userId =  localStorage.getItem("userId");
+    
+  const fetchData = async () => {
+    try {
+        const res = await fetch(`http://localhost:3000/user/${userId}`, {
+            headers: {
+                "Authorization": localStorage.getItem("token"),
+            },
+            method: "GET",
+            mode: "cors"
+        });
+       if(res.status != 200){
+        
+//setTimeOut("true");
+  
+            {  setTimeout(() => {
+              Swal.fire({
+                title: "Time out ",
+                text: "Login Time Out ! Login Again",
+                icon: "error",
+                confirmButtonText: "ok",
+              });
+              navigate("/login")
+               ("false") ;
+            }, 2000)}
+
+         
+          
+
+       }
+        const resp = await res.json();
+        console.log(resp)
+        
+        const {first_name, last_name, gender, email, address, city, country, province, zip_code} = resp;
+        setfirst_name(first_name);
+        setlast_name(last_name);
+        setgender(gender);
+        setUserEmail(email);
+        setaddress(address);
+        setcity(city);
+        setcountry(country);
+        setprovince(province);
+        setzip_code(zip_code);
+
+    } catch (err) {
+        console.log(err.message);
+    }
+};
+
+const callback = useCallback(() => fetchData(),[userId]);
+
+
+useEffect(() => {
+    callback();
+}, [callback]);
+ 
   return (
   
 
@@ -26,7 +108,7 @@ export default function ViewProfile() {
           <div className="flex flex-wrap justify-center">
             <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
               <div className="relative">
-                <img alt="..." src={backgroundImage}className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"/>
+                <img alt="..." src={backgroundImage}className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-20 -ml-20 lg:-ml-20 max-w-150-px"/>
               </div>
             </div>
             <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -39,27 +121,27 @@ export default function ViewProfile() {
             <div className="w-full lg:w-4/12 px-4 lg:order-1">
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
                 <div className="mr-4 p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span className="text-sm text-blueGray-400">Friends</span>
+                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span className="text-sm text-blueGray-400">Booking</span>
                 </div>
                 <div className="mr-4 p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Photos</span>
+                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span className="text-sm text-blueGray-400">Park Visited</span>
                 </div>
-                <div className="lg:mr-4 p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span className="text-sm text-blueGray-400">Comments</span>
-                </div>
+                
               </div>
             </div>
           </div>
           <div className="text-center mt-12">
-            <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-              Yagnik Patel
+            <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2 capitalize">
+            {first_name +" " + last_name}
             </h3>
             <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-              <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-              Los Angeles, California
+              
+              <h6> <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+               {address + ", " + city+  ", "}</h6>
+              { province+", " +zip_code+ ", " +country}
             </div>
-            <div className="mb-2 text-blueGray-600 mt-10">
-              <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>Solution Manager - Creative Tim Officer
+            <div className="mb-2 text-blueGray-600 mt-10 underline uppercase">
+              <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400" ></i>{email}
             </div>
             <div className="mb-2 text-blueGray-600">
               <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>University of Computer Science
@@ -75,26 +157,216 @@ export default function ViewProfile() {
                   warm, intimate feel with a solid groove structure. An
                   artist of considerable range.
                 </p>
-                <a href="#pablo" className="font-normal text-pink-500">Show more</a>
               </div>
+              
             </div>
           </div>
+         
         </div>
       </div>
     </div>
+    
+
+
     <footer className="relative bg-blueGray-200 pt-8 pb-6 mt-8">
   <div className="container mx-auto px-4">
     <div className="flex flex-wrap items-center md:justify-between justify-center">
       <div className="w-full md:w-6/12 px-4 mx-auto text-center">
-        <div className="text-sm text-blueGray-500 font-semibold py-1">
-          Made with <a href="https://www.creative-tim.com/product/notus-js" className="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" className="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
-        </div>
+       
       </div>
     </div>
   </div>
-</footer>
+</footer><div className="flex flex-wrap justify-center">
+          <ul class="max-w-large divide-y divide-gray-200 dark:divide-gray-700">
+   <li class="pb-3 sm:pb-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Neil Sims
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $320
+         </div>
+      </div>
+   </li>
+   <li class="py-3 sm:py-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Bonnie Green
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $3467
+         </div>
+      </div>
+   </li>
+   <li class="py-3 sm:py-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Michael Gough
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $67
+         </div>
+      </div>
+   </li>
+   <li class="py-3 sm:py-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Thomas Lean
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $2367
+         </div>
+      </div>
+   </li>
+   <li class="pt-3 pb-0 sm:pt-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-4.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Lana Byrd
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $367
+         </div>
+      </div>
+   </li>
+</ul>
+</div>
   </section>
+  
 </main>
+<div className="flex flex-wrap justify-center">
+          <ul class="max-w-large divide-y divide-gray-200 dark:divide-gray-700">
+   <li class="pb-3 sm:pb-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Neil Sims
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $320
+         </div>
+      </div>
+   </li>
+   <li class="py-3 sm:py-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Bonnie Green
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $3467
+         </div>
+      </div>
+   </li>
+   <li class="py-3 sm:py-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-2.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Michael Gough
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $67
+         </div>
+      </div>
+   </li>
+   <li class="py-3 sm:py-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Thomas Lean
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $2367
+         </div>
+      </div>
+   </li>
+   <li class="pt-3 pb-0 sm:pt-4">
+      <div class="flex items-center space-x-4">
+         <div class="flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-4.jpg" alt="Neil image"/>
+         </div>
+         <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+               Lana Byrd
+            </p>
+            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+               email@flowbite.com
+            </p>
+         </div>
+         <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+            $367
+         </div>
+      </div>
+   </li>
+</ul>
+</div>
 </>
 
   )
