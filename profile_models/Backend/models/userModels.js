@@ -58,6 +58,11 @@ const UserSchema = new mongoose.Schema({
        
 
     },
+    about_me:{
+        type:String,
+       
+
+    },
    
     isLoggedIn: {
         type: Boolean,
@@ -84,6 +89,7 @@ UserSchema.pre("save", function (next) {
 
 // Compare the plain text password with the hashed password
 UserSchema.methods.checkPassword = function (password) {
+    console.log(this.password)
     return bcrypt.compare(password, this.password)
 }
 

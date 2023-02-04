@@ -9,9 +9,11 @@ import Swal from 'sweetalert2'
 
 import backgroundImage from './pexels-pixabay-220453.jpg'
 export default function ViewProfile() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  // reacct state
+  function handleClick() {
+    navigate("/home");
+  }
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [email, setUserEmail] = useState("");

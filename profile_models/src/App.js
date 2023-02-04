@@ -41,6 +41,7 @@ function App() {
           </Route>
           <Route path="/settingPage" element={<SettingPage />}></Route>
           <Route path="/ViewProfile" element={<ViewProfile />}></Route>
+          
         </Routes>
       </BrowserRouter>
     </>
