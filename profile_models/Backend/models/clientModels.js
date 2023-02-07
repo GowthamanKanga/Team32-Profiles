@@ -1,33 +1,70 @@
 const mongoose = require("mongoose")
 const User = require('../models/userModels')
-
+const {isEmail} = require('validator')
 const ClientSchema = new mongoose.Schema({
+        
+    first_name:{
+        type:String,
+        required : [true, "Please enter a First name."],
+
+    },
+    last_name:{
+        type:String,
+        required : [true, "Please enter a Last name."],
+
+    },
+   
+    gender:{
+        type:String,
+         enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
+        // required : [true, "Please enter a Gender."],
+    }
+    , email:{
+            type:String,
+            required : [true, "Please enter an Email."],
+            unique: true,
+            validate:[isEmail, "Please Enter a valid Email."]
     
-    user : User.getSchema
-    // first_name:{
-    //     type:String,
-    //     required : [true, "Please enter a First name."],
+    
+        },
+    
+    password: {
+        type: String,
+        minlength: 8,
+        maxlength: 32,
+    },
+    address:{
+        type:String,
+     
 
-    // },
-    // last_name:{
-    //     type:String,
-    //     required : [true, "Please enter a Last name."],
+    },
+    city:{
+        type:String,
+       
 
-    // },
-    // email:{
-    //     type:String,
-    //     required : [true, "Please enter an Email."],
-    //     unique: true,
-    //     validate:[isEmail, "Please Enter a valid Email."]
+    },
+    country:{
+        type:String,
+     
 
+    },
+    province:{
+        type:String,
+       
 
-    // },
-    // gender:{
-    //     type:String,
-    //      enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
-    //      required : [true, "Please enter a Gender."],
+    },
+    zip_code:{
+        type:String,
+       
 
-    // },
+    },
+    about_me:{
+        type:String,
+       
+     
+
+    }
+
  ,   pages: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Page',
@@ -38,10 +75,14 @@ const ClientSchema = new mongoose.Schema({
         ref: 'Event',
         required: true
     }],
-    isLoggedIn: {
-        type: Boolean,
-        default: false
-    }
+
+   
+isLoggedIn: {
+    type: Boolean,
+    default: false
+}
+}, {
+timestamps: true
 })
 
 ClientSchema.methods.addPage = function(page) {

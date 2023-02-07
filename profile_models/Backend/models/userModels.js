@@ -67,7 +67,13 @@ const UserSchema = new mongoose.Schema({
     isLoggedIn: {
         type: Boolean,
         default: false
-    }
+    },
+    profileImage: {
+        type: String,
+        // default: false
+    },
+    
+
 }, {
     timestamps: true
 })
