@@ -43,7 +43,7 @@ router.get("/profile/image/:id", (req, res) => {
       
       try {
         const filePath = path.join(__dirname, "..", "ProfileImgs", fileName);
-        console.log(filePath);
+     
         fs.stat(filePath, (err, stat) => {
           if (err) {
             console.error(`Error: ${err.message}`);
@@ -189,96 +189,7 @@ router.route("/updatePassword/:id").put(async (req, res) => {
   }
 });
 
-//-------------------------------------------------------------------//
 
-// Login and Register User
 
-router.post("/signup", async (req, res) => {
-  const user = req.body;
-  const userExists = await User.findOne({ username: user.email });
-  if (userExists) {
-    res.status(400).json("User already Exists");
-    // throw new Error('User already exists')
-  } else {
-    const newUser = new User(req.body);
-    try {
-      await newUser.save();
-      res.status(201).send(newUser);
-    } catch (error) {
-      const errors = handleErrors(error);
-      res.status(500).json({ errors });
-    }
-  }
-});
-
-router.post("/login", async (req, res) => {
-  try {
-    // adding user info email and password in user variable
-    const user = req.body;
-    // checking if user exists
-
-    const userExists = await User.findOne({ email: user.username });
-    // if user is there we validate password and if its right we sent 200 logged in
-    if (userExists) {
-      const isValid = await userExists.checkPassword(user.password);
-
-      if (isValid) {
-        jwt.sign(
-          { userExists },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "1h",
-          },
-          (err, token) => {
-            res
-              .status(200)
-              .send({
-                status: true,
-                username: user.username,
-                message: "User logged in successfully",
-                accessToken: token,
-              });
-          }
-        );
-      } else {
-        return res
-          .status(401)
-          .send({ status: false, message: "Invalid  password" });
-      }
-    }
-    // or sending error
-    else {
-      return res
-        .status(401)
-        .send({ status: false, message: "Invalid Username and password" });
-    }
-  } catch (error) {
-    const errors = handleErrors(error);
-    res.status(500).json({ errors });
-  }
-});
-
-/// all methods needed for User
-// const handleErrors = (err) => {
-//   // screating json error for all the fields
-
-//   let errors = { first_name: "", last_name: "", email: "", gender: "" };
-
-//   // catching the unique error msg for emails
-//   if (err.code === 11000) {
-//     errors.email = "that email is already registered";
-//     return errors;
-//   } else if (err.message.includes("User validation failed")) {
-//     // looking for errors genereated from validation script
-
-//     Object.values(err.errors).forEach(({ properties }) => {
-//       errors[properties.path] = properties.message;
-//     });
-//   } else {
-//     // for any other errors we run into
-//     errors = { message: "Error while instering New User" };
-//   }
-//   return errors;
-// };
 
 module.exports = router;

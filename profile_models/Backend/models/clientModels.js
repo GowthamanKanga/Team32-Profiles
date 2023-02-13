@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const User = require('../models/userModels')
 const {isEmail} = require('validator')
+const bcrypt = require("bcrypt")
 const ClientSchema = new mongoose.Schema({
         
     first_name:{
@@ -63,6 +64,10 @@ const ClientSchema = new mongoose.Schema({
        
      
 
+    },
+    profileImage: {
+        type: String,
+        // default: false
     }
 
  ,   pages: [{
@@ -84,6 +89,27 @@ isLoggedIn: {
 }, {
 timestamps: true
 })
+
+// Hash the plain text password before saving the user
+ClientSchema.pre("save", function (next) {
+    if (!this.isModified("password")) {
+        return next()
+    }
+
+    bcrypt.hash(this.password, 8, (err, hash) => {
+        if (err) {
+            return next(err)
+        }
+        this.password = hash
+        next()
+    })
+})
+
+// Compare the plain text password with the hashed password
+ClientSchema.methods.checkPassword = function (password) {
+    console.log(this.password)
+    return bcrypt.compare(password, this.password)
+}
 
 ClientSchema.methods.addPage = function(page) {
     this.pages.push(page)

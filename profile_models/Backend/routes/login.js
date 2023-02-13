@@ -5,7 +5,7 @@ let User = require("../models/userModels");
 let Admin = require("../models/adminModels");
 let Client = require("../models/clientModels");
 const jwt = require("jsonwebtoken");
-const handleErrors =require("../routes/func")
+
 const { verifytoken } = require("./func");
 
 User = User.getModel;
@@ -14,17 +14,16 @@ User = User.getModel;
 router.post("/signup", async (req, res) => {
 
     const user = req.body;
-       
+   // console.log(user)
+     
       let userExists 
       // checking variable name admin,user,client 
       if(user.role === "admin"){
-         userExists = await Admin.findOne({ email: user.email });
-         console.log(userExists)
-         if (userExists) {
-            res.status(400).json("Admin already Exists");
-            // throw new Error('User already exists')
-          } else {
-            const newAdmin = new Admin(req.body);
+        // userExists = await Admin.findOne({ email: user.email });
+       
+       console.log("im not herem ")
+              const newAdmin = new Admin(user);
+
             try {
               await newAdmin.save();
               res.status(201).send(newAdmin);
@@ -32,31 +31,27 @@ router.post("/signup", async (req, res) => {
               const errors = handleErrors(error);
               res.status(500).json({ errors });
             }
-          }
+          
 
       }
       else if  (user.role === "client"){
-         userExists = await Client.findOne({ email: user.email });
-         if (userExists) {
-            res.status(400).json("Client already Exists");
-            // throw new Error('User already exists')
-          } else {
+        // userExists = await Client.findOne({ email: user.email });
+         console.log("im here")
             const newClient = new Client(req.body);
+            console.log(newClient)
             try {
               await newClient.save();
+              
               res.status(201).send(newClient);
             } catch (error) {
               const errors = handleErrors(error);
+       
               res.status(500).json({ errors });
             }
-          }
+          
       }
       else if (user.role === "user") {
-         userExists = await User.findOne({ email: user.email });
-         if (userExists) {
-            res.status(400).json("User already Exists");
-            // throw new Error('User already exists')
-          } else {
+        
             const newUser = new User(req.body);
             try {
               await newUser.save();
@@ -65,7 +60,7 @@ router.post("/signup", async (req, res) => {
               const errors = handleErrors(error);
               res.status(500).json({ errors });
             }
-          }
+          
       }
       
 
@@ -79,9 +74,12 @@ router.post("/login", async (req, res) => {
     
       
       let userExists 
+     
       // checking variable name admin,user,client 
       if(user.role === "admin"){
+      
          userExists = await Admin.findOne({ email: user.username });
+      
       }
       else if  (user.role === "client"){
          userExists = await Client.findOne({ email: user.username });
@@ -128,8 +126,31 @@ router.post("/login", async (req, res) => {
       }
     } catch (error) {
     
-      res.status(500).json( error );
+      res.status(500).json( { message: "Invalid Username and password" } );
     }
   });
+  
+const handleErrors = (err) => {
+  // screating json error for all the fields
+
+  let errors = { first_name: "", last_name: "", email: ""};
+
+  // catching the unique error msg for emails
+  if (err.code === 11000) {
+    errors.email = "This email is already registered";
+    return errors;
+  } else if (err.message.includes("Admin validation failed")||err.message.includes("Client validation failed")||err.message.includes("Admin validation failed")) {
+    // looking for errors genereated from validation script
+console.log()
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+  } else {
+    // for any other errors we run into
+    errors = { message: "Error while instering New User" };
+  }
+  return errors;
+};
+
   
   module.exports = router;

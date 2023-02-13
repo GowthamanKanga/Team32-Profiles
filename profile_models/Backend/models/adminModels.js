@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const {isEmail} = require('validator')
 const User = require('../models/userModels')
+const bcrypt = require("bcrypt")
+
 
 const AdminSchema = new mongoose.Schema({
 
@@ -22,7 +24,8 @@ const AdminSchema = new mongoose.Schema({
          enum : { values: ['Male', 'Female','Other'], message: '{VALUE} is not supported' },
         // required : [true, "Please enter a Gender."],
     }
-    , email:{
+    , 
+    email:{
             type:String,
             required : [true, "Please enter an Email."],
             unique: true,
@@ -71,13 +74,14 @@ const AdminSchema = new mongoose.Schema({
     isLoggedIn: {
         type: Boolean,
         default: false
+    },   profileImage: {
+        type: String,
+        // default: false
     }
 }, {
     timestamps: true
 })
-const Admin = mongoose.model('Admin', AdminSchema);
 
-module.exports = Admin;
 
 AdminSchema.methods.login = function() {
     this.isLoggedIn = true
@@ -88,3 +92,27 @@ AdminSchema.methods.logout = function() {
     this.isLoggedIn = false
     return this.save()
 };
+
+// Hash the plain text password before saving the user
+AdminSchema.pre("save", function (next) {
+    if (!this.isModified("password")) {
+        return next()
+    }
+
+    bcrypt.hash(this.password, 8, (err, hash) => {
+        if (err) {
+            return next(err)
+        }
+        this.password = hash
+        next()
+    })
+})
+
+// Compare the plain text password with the hashed password
+AdminSchema.methods.checkPassword = function (password) {
+    console.log(this.password)
+    return bcrypt.compare(password, this.password)
+}
+const Admin = mongoose.model('Admin', AdminSchema);
+
+module.exports = Admin;

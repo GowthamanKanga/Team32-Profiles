@@ -6,6 +6,7 @@ const adminsRouter = require("./routes/admins");
 const usersRouter = require("./routes/users");
 const loginRouter = require("./routes/login");
 const bodyParser = require('body-parser');
+const feedBackRouter = require("./routes/feedback");
 require("dotenv").config();
 
 const app = express();
@@ -21,7 +22,7 @@ app.use("/admin", adminsRouter);
 app.use("/auth", loginRouter);
 // app.use("/client",clientsRouter)
 app.use("/user", usersRouter);
-
+app.use("/feedback", feedBackRouter);
 const uri = process.env.ATLAS_URI;
 mongoose.set("strictQuery", false);
 mongoose.connect(uri);
