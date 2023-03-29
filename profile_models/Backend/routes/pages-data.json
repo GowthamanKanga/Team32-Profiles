@@ -1,0 +1,136 @@
+{
+    "name": "Central Park",
+    "clientId": "abc123",
+    "address": "New York, NY",
+    "description": "Central Park is an urban park in New York City",
+    "home": {
+      "title": "Welcome to Central Park",
+      "about": "Central Park is the most visited urban park in the United States.",
+      "events": "Check out the latest events happening in Central Park.",
+      "address": "Central Park, New York, NY",
+      "description": "Central Park is an urban park in New York City",
+      "lat": 40.785091,
+      "lng": -73.968285,
+      "info": [
+        "Central Park spans over 840 acres.",
+        "The park contains 58 miles of walking paths.",
+        "Central Park features 36 bridges and arches."
+      ],
+      "hours": [
+        {
+          "day": "Monday",
+          "time": "6:00 am - 1:00 am"
+        },
+        {
+          "day": "Tuesday",
+          "time": "6:00 am - 1:00 am"
+        },
+        {
+          "day": "Wednesday",
+          "time": "6:00 am - 1:00 am"
+        },
+        {
+          "day": "Thursday",
+          "time": "6:00 am - 1:00 am"
+        },
+        {
+          "day": "Friday",
+          "time": "6:00 am - 1:00 am"
+        },
+        {
+          "day": "Saturday",
+          "time": "6:00 am - 1:00 am"
+        },
+        {
+          "day": "Sunday",
+          "time": "6:00 am - 1:00 am"
+        }
+      ],
+      "clientId": "abc123",
+      "backgroundImg": "https://www.centralparknyc.org/images/default-source/homepage-images/homepage_hero_desktop.jpg?sfvrsn=f92a32ee_2"
+    },
+    "facilities":{
+        
+        "facilities": [
+          {
+            "name": "Swimming Pool",
+            "description": "An outdoor pool for recreational swimming and laps",
+            "image": "https://example.com/images/pool.jpg",
+            "capacity": 50,
+            "equipment": [
+              {
+                "name": "Pool noodles",
+                "quantity": 10,
+                "description": "Foam tubes used for buoyancy and support"
+              },
+              {
+                "name": "Kickboards",
+                "quantity": 5,
+                "description": "Foam boards used for training and support"
+              }
+            ],
+            "visitors": {
+              "max": 100,
+              "min": 10
+            }
+          },
+          {
+            "name": "Tennis Court",
+            "description": "An outdoor court for playing tennis",
+            "image": "https://example.com/images/tennis.jpg",
+            "capacity": 8,
+            "equipment": [
+              {
+                "name": "Tennis rackets",
+                "quantity": 4,
+                "description": "Rackets used for hitting the ball"
+              },
+              {
+                "name": "Tennis balls",
+                "quantity": 20,
+                "description": "Balls used for playing tennis"
+              }
+            ],
+            "visitors": {
+              "max": 16,
+              "min": 2
+            }
+          }
+        ]
+      },
+"events":{
+    "events": [
+      {
+        "image": "https://example.com/event1.jpg",
+        "name": "Concert in the Park",
+        "date": "2023-07-15",
+        "time": "18:00",
+        "location": "Main Stage",
+        "description": "Join us for an evening of live music in the park! Featuring popular local bands and musicians.",
+        "capacity": 500,
+        "price": 10.00
+      },
+      {
+        "image": "https://example.com/event2.jpg",
+        "name": "Outdoor Movie Night",
+        "date": "2023-08-05",
+        "time": "20:00",
+        "location": "Amphitheater",
+        "description": "Bring your blankets and chairs for a night of family-friendly movies under the stars!",
+        "capacity": 200,
+        "price": 5.00
+      },
+      {
+        "image": "https://example.com/event3.jpg",
+        "name": "Park Cleanup Day",
+        "date": "2023-09-02",
+        "time": "10:00",
+        "location": "Various Locations",
+        "description": "Help us keep the park clean and beautiful by participating in our annual cleanup day! All volunteers will receive a free t-shirt and lunch.",
+        "capacity": 100,
+        "price": 0.00
+      }
+    ]
+  }
+}
+        

@@ -2,10 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const adminsRouter = require("./routes/admins");
-// const clientsRouter = require('./routes/clients')
+const clientsRouter = require('./routes/clients')
 const usersRouter = require("./routes/users");
 const loginRouter = require("./routes/login");
 const bodyParser = require('body-parser');
+const park = require("./routes/park.js")
+
 const feedBackRouter = require("./routes/feedback");
 require("dotenv").config();
 
@@ -17,10 +19,10 @@ app.use(express.json({ limit: "50mb"}));
 
 
 
-
+app.use("/park", park);
 app.use("/admin", adminsRouter);
 app.use("/auth", loginRouter);
-// app.use("/client",clientsRouter)
+app.use("/client",clientsRouter)
 app.use("/user", usersRouter);
 app.use("/feedback", feedBackRouter);
 const uri = process.env.ATLAS_URI;

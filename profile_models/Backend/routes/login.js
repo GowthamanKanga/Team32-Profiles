@@ -139,7 +139,7 @@ const handleErrors = (err) => {
   if (err.code === 11000) {
     errors.email = "This email is already registered";
     return errors;
-  } else if (err.message.includes("Admin validation failed")||err.message.includes("Client validation failed")||err.message.includes("Admin validation failed")) {
+  } else if (err.message.includes("User validation failed")||err.message.includes("Client validation failed")||err.message.includes("Admin validation failed")) {
     // looking for errors genereated from validation script
 console.log()
     Object.values(err.errors).forEach(({ properties }) => {
