@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const fs = require('fs');
+const path = require('path');
 const mongoose = require("mongoose");
 const adminsRouter = require("./routes/admins");
 const clientsRouter = require('./routes/clients')
@@ -17,6 +19,8 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json({ limit: "50mb"}));
 
+// Serve static files from the "public" directory
+app.use('/uploads', express.static(path.join(__dirname, 'parkImages')));
 
 
 app.use("/park", park);

@@ -99,38 +99,50 @@
         ]
       },
 "events":{
-    "events": [
-      {
-        "image": "https://example.com/event1.jpg",
-        "name": "Concert in the Park",
-        "date": "2023-07-15",
-        "time": "18:00",
-        "location": "Main Stage",
-        "description": "Join us for an evening of live music in the park! Featuring popular local bands and musicians.",
-        "capacity": 500,
-        "price": 10.00
-      },
-      {
-        "image": "https://example.com/event2.jpg",
-        "name": "Outdoor Movie Night",
-        "date": "2023-08-05",
-        "time": "20:00",
-        "location": "Amphitheater",
-        "description": "Bring your blankets and chairs for a night of family-friendly movies under the stars!",
-        "capacity": 200,
-        "price": 5.00
-      },
-      {
-        "image": "https://example.com/event3.jpg",
-        "name": "Park Cleanup Day",
-        "date": "2023-09-02",
-        "time": "10:00",
-        "location": "Various Locations",
-        "description": "Help us keep the park clean and beautiful by participating in our annual cleanup day! All volunteers will receive a free t-shirt and lunch.",
-        "capacity": 100,
-        "price": 0.00
-      }
-    ]
+  "events": [
+    {
+      "image": "https://example.com/event1.jpg",
+      "name": "Concert in the Park",
+      "startDate": "2023-07-15",
+      "endDate": "2023-07-15",
+      "startTime": "18:00",
+      "endTime": "22:00",
+      "location": "Main Stage",
+      "description": "Join us for an evening of live music in the park! Featuring popular local bands and musicians.",
+      "numTickets": 500,
+      "bookings": [],
+      "createdAt": "2023-03-29T08:00:00.000Z",
+      "updatedAt": "2023-03-29T08:00:00.000Z"
+    },
+    {
+      "image": "https://example.com/event2.jpg",
+      "name": "Outdoor Movie Night",
+      "startDate": "2023-08-05",
+      "endDate": "2023-08-05",
+      "startTime": "20:00",
+      "endTime": "23:00",
+      "location": "Amphitheater",
+      "description": "Bring your blankets and chairs for a night of family-friendly movies under the stars!",
+      "numTickets": 200,
+      "bookings": [],
+      "createdAt": "2023-03-29T08:00:00.000Z",
+      "updatedAt": "2023-03-29T08:00:00.000Z"
+    },
+    {
+      "image": "https://example.com/event3.jpg",
+      "name": "Park Cleanup Day",
+      "startDate": "2023-09-02",
+      "endDate": "2023-09-02",
+      "startTime": "10:00",
+      "endTime": "14:00",
+      "location": "Various Locations",
+      "description": "Help us keep the park clean and beautiful by participating in our annual cleanup day! All volunteers will receive a free t-shirt and lunch.",
+      "numTickets": 100,
+      "bookings": [],
+      "createdAt": "2023-03-29T08:00:00.000Z",
+      "updatedAt": "2023-03-29T08:00:00.000Z"
+    }
+  ]
   }
 }
         

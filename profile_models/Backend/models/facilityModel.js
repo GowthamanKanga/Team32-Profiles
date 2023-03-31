@@ -7,10 +7,10 @@ const FacilitiesSchema = new mongoose.Schema({
    
   },
   facilities: [{
-    
+      
     name: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true },
+    image: { type: String},
     capacity: { type: Number, required: true },
     equipment: [
       {
