@@ -38,6 +38,10 @@ const ParkSchema = new mongoose.Schema({
     map: {
       type: MapPageSchema,
       
+    },
+    accepted: {
+      type: Boolean,
+      default: false
     }
   });
   const Park = mongoose.model('Park', ParkSchema);
