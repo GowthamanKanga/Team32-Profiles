@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require("multer")
 const Park = require('../models/parkModel');
 const fs = require('fs');
+const Request = require('../models/reqestModel');
 const path = require('path');
  
 
@@ -434,7 +435,7 @@ router.post('/create-park-and-request', upload2.fields([
 ]), async (req, res) => {
   try {
     // Get the data for the new park from the request body
-    const { name, clientId, address, description } = req.body;
+    const { name, clientId,phone,email, address, description } = req.body;
     
     // Load the data for all the pages from a JSON file
     
@@ -446,6 +447,8 @@ router.post('/create-park-and-request', upload2.fields([
       clientId,
       address,
       description,
+      phone,
+      email,
       home: pagesData.home,
       facilities: pagesData.facilities,
       events: pagesData.events,
@@ -454,14 +457,17 @@ router.post('/create-park-and-request', upload2.fields([
 
     // Save the new park to the database
     const savedPark = await newPark.save();
- 
+ console.log(savedPark)
+ console.log(savedPark._id)
     // Get the file objects from the request
     const { land_title_deed, purchase_agreement, zoning_by_laws, building_permits } = req.files;
-
+console.log(land_title_deed[0].filename)
     // Create a new request object with the received data and the IDs of the newly created park
     const newRequest = new Request({
-        clientId,
-        parkId: savedPark._id,
+      client_id: clientId,
+      park_id: savedPark._id,
+        phone,
+         email,
         land_title_deed: land_title_deed[0].filename,
         purchase_agreement: purchase_agreement[0].filename,
         zoning_by_laws: zoning_by_laws[0].filename,
@@ -469,7 +475,7 @@ router.post('/create-park-and-request', upload2.fields([
       
       
     });
-
+console.log(newRequest)
     // Save the new request to the database
     const savedRequest = await newRequest.save();
 
@@ -480,6 +486,9 @@ router.post('/create-park-and-request', upload2.fields([
     res.status(500).json({ message: error.message });
   }
 });
+
+
+module.exports = router;
 router.delete('/:parkId/facility',upload.none(), async (req, res) => {
   
   try {
@@ -505,25 +514,68 @@ console.log(req.body._id)
   }
 });
 /// get method for admin to see all documents
-router.get('/requests', async (req, res) => {
+router.get('/request', async (req, res) => {
   try {
     const requests = await Request.find();
+    
+  
     const requestsWithDocs = await Promise.all(
-      requests.map(async (request) => {
-        const docs = [];
-        for (const doc of request.docs) {
-          const docPath = `uploads/${doc.filename}`;
-          docs.push({ ...doc.toObject(), path: docPath });
-        }
-        return { ...request.toObject(), docs };
+      requests.map(async (event) => {
+        const land_title_deedPath =  `documents/${event.land_title_deed}`; 
+        const purchase_agreementPath =  `documents/${event.purchase_agreement}`; 
+        const zoning_by_lawsPath =  `documents/${event.zoning_by_laws}`; 
+        const building_permitsPath =  `documents/${event.building_permits}`; 
+        
+        return { ...event.toObject(), 
+          land_title_deed: land_title_deedPath ,
+          purchase_agreement:purchase_agreementPath,
+          zoning_by_laws: zoning_by_lawsPath,
+          building_permits: building_permitsPath
+
+        };
       })
     );
+    console.log(requestsWithDocs)
     res.json(requestsWithDocs);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
+// router.get('/requests', async (req, res) => {
+//   try {
+//     const requests = await Request.find();
+    
+//     const requestsWithDocs = await Promise.all(
+//       requests.map(async (request) => {
+//         const docs = [];
+//         const { land_title_deed, purchase_agreement, zoning_by_laws, building_permits } = request;
+//         if (land_title_deed) {
+//           const docPath = `uploads/${land_title_deed.filename}`;
+//           docs.push({ ...land_title_deed.toObject(), path: docPath });
+//         }
+//         if (purchase_agreement) {
+//           const docPath = `uploads/${purchase_agreement.filename}`;
+//           docs.push({ ...purchase_agreement.toObject(), path: docPath });
+//         }
+//         if (zoning_by_laws) {
+//           const docPath = `uploads/${zoning_by_laws.filename}`;
+//           docs.push({ ...zoning_by_laws.toObject(), path: docPath });
+//         }
+//         if (building_permits) {
+//           const docPath = `uploads/${building_permits.filename}`;
+//           docs.push({ ...building_permits.toObject(), path: docPath });
+//         }
+//         return { ...request.toObject(), docs };
+//       })
+//     );
+//     res.json(requestsWithDocs);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send('Server Error');
+//   }
+// });
+
 
 // Define the endpoint to accept/reject a request and update the corresponding park
 router.put('/accept-request/:requestId', async (req, res) => {
@@ -557,10 +609,11 @@ router.put('/accept-request/:requestId', async (req, res) => {
 router.get('/parks/:clientId', async (req, res) => {
   try {
     const clientId = req.params.clientId;
+console.log(clientId)
+    // Find all parks with the given clientId and accepted field set to true
+    const parks = await Park.find({ clientId: clientId});
 
-    // Find all parks with the given clientId
-    const parks = await Park.find({ clientId });
-
+console.log(parks)
     // Send a response with the parks
     res.json(parks);
   } catch (error) {
@@ -568,6 +621,7 @@ router.get('/parks/:clientId', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
 router.put('/:parkId/facility/update', upload.single('image'), async (req, res) => {
   
 
@@ -608,6 +662,12 @@ router.put('/:parkId/facility/update', upload.single('image'), async (req, res) 
     console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
+});
+router.post('/documnttest', upload.single('file'), (req, res) => {
+  const file = req.file;
+  console.log(file);
+  // Handle the files here
+  res.sendStatus(200);
 });
 
 module.exports = router;

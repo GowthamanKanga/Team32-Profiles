@@ -23,6 +23,14 @@ const ParkSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    phone: {
+      type: String,
+      required: true
+    },
+     email: {
+      type: String,
+      required: true
+    },
     home: {
       type: HomeSchema,
       required: true

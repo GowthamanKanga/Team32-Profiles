@@ -2,13 +2,22 @@ const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
   client_id: {
-    type: Number,
+    type: String,
     required: true
   },
   park_id: {
-    type: Number,
+    type: String,
     required: true
   },
+  phone: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+ 
   land_title_deed: {
     type: String,
     required: true

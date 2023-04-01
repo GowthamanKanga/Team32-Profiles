@@ -22,7 +22,7 @@ app.use(express.json({ limit: "50mb"}));
 // Serve static files from the "public" directory
 app.use('/uploads', express.static(path.join(__dirname, 'parkImages')));
 
-
+app.use('/documents', express.static(path.join(__dirname, 'documents')));
 app.use("/park", park);
 app.use("/admin", adminsRouter);
 app.use("/auth", loginRouter);
